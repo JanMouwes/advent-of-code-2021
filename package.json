@@ -4,7 +4,7 @@
   "description": "Advent of code 2021 ",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --respawn -- src/main.ts",
+    "start": "ts-node-dev --respawn --clear -- src/main.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
