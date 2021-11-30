@@ -1,9 +1,14 @@
-build/**
-
-node_modules/**
-
+# MacOS-specific
 .DS_Store
 
+# NPM-related
+node_modules/**
 package-lock.json
 
+build/**
+
+# Advent of Code-specific
 input.txt
+
+# VSCode-specific
+.vscode/**
