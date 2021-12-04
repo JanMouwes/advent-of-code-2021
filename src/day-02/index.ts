@@ -4,7 +4,7 @@ export function part1(fileContents: string) {
   const buckets = Object.fromEntries(
     ["forward", "down", "up"].map((dir) => [
       dir,
-      commands.filter(([fst,]) => fst === dir).map(second),
+      commands.filter(([fst]) => fst === dir).map(second),
     ])
   );
 

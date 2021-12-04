@@ -6,19 +6,23 @@ export function part1(fileContents: string) {
   const mask = Number.parseInt("".padEnd(INPUT_WIDTH, "1"), 2);
 
   const gamma = calculateGamma(numbers);
-  const epsilon = gamma ^ mask
+  const epsilon = gamma ^ mask;
 
-  return gamma * epsilon
+  return gamma * epsilon;
 }
 
 function calculateGamma(input: number[]) {
   const masks = new Array(INPUT_WIDTH).fill(2).map((n, i) => Math.pow(n, i));
 
-  return masks.map(mask => {
-    const moreOnes = input.map(n => n & mask).filter(n => n > 0).length > (input.length / 2)
+  return masks
+    .map((mask) => {
+      const moreOnes =
+        input.map((n) => n & mask).filter((n) => n > 0).length >
+        input.length / 2;
 
-    return moreOnes ? mask : 0;
-  }).reduce((x, y) => x + y, 0)
+      return moreOnes ? mask : 0;
+    })
+    .reduce((x, y) => x + y, 0);
 }
 
 export function part2(fileContents: string) {
@@ -30,7 +34,10 @@ export function part2(fileContents: string) {
   return co2 * oxygen;
 }
 
-function calculateRating(allNumbers: number[], toBit: (res: CompResult) => Bit): number {
+function calculateRating(
+  allNumbers: number[],
+  toBit: (res: CompResult) => Bit
+): number {
   let result = "";
 
   return range(INPUT_WIDTH).reduce((input: number[], i: number) => {
@@ -40,7 +47,7 @@ function calculateRating(allNumbers: number[], toBit: (res: CompResult) => Bit):
 
     result += toBit(compareOnes(input, i));
 
-    return input.filter(n => toBinaryString(n).startsWith(result));
+    return input.filter((n) => toBinaryString(n).startsWith(result));
   }, allNumbers)[0];
 }
 
@@ -67,14 +74,16 @@ function toBitBase(result: CompResult, eq: Bit, gt: Bit, lt: Bit): Bit {
 }
 
 function compareOnes(input: number[], position: number): CompResult {
-  const oneCount = input.map(n => {
-    return toBinaryString(n)[position];
-  }).filter(n => n === "1").length;
+  const oneCount = input
+    .map((n) => {
+      return toBinaryString(n)[position];
+    })
+    .filter((n) => n === "1").length;
 
-  const threshold = input.length / 2
+  const threshold = input.length / 2;
 
   if (threshold === oneCount) {
-    return "equal"
+    return "equal";
   }
 
   return oneCount > threshold ? "greater" : "less";
@@ -86,7 +95,7 @@ function range(start: number, end?: number): number[] {
     start = 0;
   }
 
-  return new Array(end - start).fill(start).map((_, i) => start + i)
+  return new Array(end - start).fill(start).map((_, i) => start + i);
 }
 
 function toBinaryString(n: number, padding: number = INPUT_WIDTH) {
@@ -97,5 +106,5 @@ function parseInput(commands: string): number[] {
   return commands
     .split("\n")
     .filter((i) => i.trim() != "")
-    .map(n => Number.parseInt(n, 2));
+    .map((n) => Number.parseInt(n, 2));
 }
