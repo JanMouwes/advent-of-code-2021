@@ -1,4 +1,4 @@
-import {range, transpose, id, sum} from "../util"
+import {transpose, id, sum} from "../util"
 
 const INPUT_WIDTH = 12;
 

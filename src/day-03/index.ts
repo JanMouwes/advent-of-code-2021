@@ -1,3 +1,5 @@
+import {range} from "../util"
+
 const INPUT_WIDTH = 12;
 
 export function part1(fileContents: string) {
@@ -87,15 +89,6 @@ function compareOnes(input: number[], position: number): CompResult {
   }
 
   return oneCount > threshold ? "greater" : "less";
-}
-
-function range(start: number, end?: number): number[] {
-  if (end == null) {
-    end = start;
-    start = 0;
-  }
-
-  return new Array(end - start).fill(start).map((_, i) => start + i);
 }
 
 function toBinaryString(n: number, padding: number = INPUT_WIDTH) {
