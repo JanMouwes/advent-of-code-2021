@@ -1,4 +1,4 @@
-import { part1, part2 } from "./day-02";
+import { part1, part2 } from "./day-03";
 import { readFile } from "fs/promises";
 
 async function main(): Promise<void> {
