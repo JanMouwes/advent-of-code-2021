@@ -1,4 +1,4 @@
-import {range} from "../util"
+import { range } from "../util";
 
 const INPUT_WIDTH = 12;
 

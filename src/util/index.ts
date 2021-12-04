@@ -9,15 +9,13 @@ export function range(start: number, end?: number): number[] {
 
 export function transpose<T>(matrix: T[][]) {
   const rowLength = matrix[0].length;
-  
-  return range(rowLength).map(i => matrix.map(row => row[i]));
-}
 
+  return range(rowLength).map((i) => matrix.map((row) => row[i]));
+}
 
 export function id<T>(input: T): T {
   return input;
 }
-
 
 export function second<T>([, snd]: [any, T]): T {
   return snd;
