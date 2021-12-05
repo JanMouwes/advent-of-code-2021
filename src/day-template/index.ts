@@ -10,7 +10,6 @@ export function part2(fileContents: string) {
   return parsed;
 }
 
-
 function parseInput(input: string): any {
   return input;
 }
