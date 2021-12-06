@@ -1,11 +1,10 @@
-
 import { readFile } from "fs/promises";
 
 async function main(day: string): Promise<void> {
-  const folder = "day-" + day.padStart(2, "0")
+  const folder = "day-" + day.padStart(2, "0");
 
   const { part1, part2 } = await import("./" + folder);
-  const input = (await readFile("./src/"+ folder + "/input.txt")).toString();
+  const input = (await readFile("./src/" + folder + "/input.txt")).toString();
 
   console.log("PART 1:\n");
   await runTimed(() => printResult(part1(input)));

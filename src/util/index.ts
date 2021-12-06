@@ -57,10 +57,10 @@ export function count<T, K>(array: T[], fn: (item: T) => K): Map<K, number> {
 
     const current = map.get(key)!;
     return map.set(key, current + 1);
-  }, new Map<K, number>())
+  }, new Map<K, number>());
 }
 
-export function not<T>(fn: (i:T) => boolean): (i:T) => boolean {
+export function not<T>(fn: (i: T) => boolean): (i: T) => boolean {
   return (i) => !fn(i);
 }
 
@@ -68,5 +68,5 @@ export function filterInOut<T>(list: T[], fn: (i: T) => boolean): [T[], T[]] {
   const yes = list.filter(fn);
   const no = list.filter(not(fn));
 
-  return [yes, no]
+  return [yes, no];
 }
