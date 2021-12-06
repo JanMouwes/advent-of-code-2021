@@ -46,3 +46,27 @@ export function uncurry<T1, T2, T3>(
 ): (input: [T1, T2]) => T3 {
   return ([a, b]) => fn(a, b);
 }
+
+export function count<T, K>(array: T[], fn: (item: T) => K): Map<K, number> {
+  return array.reduce((map, item) => {
+    const key = fn(item);
+
+    if (!map.has(key)) {
+      return map.set(key, 1);
+    }
+
+    const current = map.get(key)!;
+    return map.set(key, current + 1);
+  }, new Map<K, number>())
+}
+
+export function not<T>(fn: (i:T) => boolean): (i:T) => boolean {
+  return (i) => !fn(i);
+}
+
+export function filterInOut<T>(list: T[], fn: (i: T) => boolean): [T[], T[]] {
+  const yes = list.filter(fn);
+  const no = list.filter(not(fn));
+
+  return [yes, no]
+}
