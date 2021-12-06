@@ -2,9 +2,6 @@ import { range, id, count, sum } from '../util/index';
 export function part1(fileContents: string) {
   const parsed: any = parseInput(fileContents);
 
-  console.log(count(parsed, id));
-  
-
   return calculateFishCountByDay(parsed, 80);
 }
 
@@ -25,8 +22,8 @@ function calculateFishCountByDay(fish: number[], day: number): number {
       }
 
       const newDays = days - 1;
-      const newValue = fish + (newMap.get(newDays) || 0); 
-      
+      const newValue = fish + (newMap.get(newDays) || 0);
+
       newMap.set(newDays, newValue)
     }
 
@@ -34,8 +31,6 @@ function calculateFishCountByDay(fish: number[], day: number): number {
   }
 
   const fishMap = count(fish, id);
-  console.log(fishMap);
-  
 
   return sum([...range(day).reduce(nextFishMap, fishMap).values()])
 }

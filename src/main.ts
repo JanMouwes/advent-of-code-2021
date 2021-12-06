@@ -1,20 +1,23 @@
-import { part1, part2 } from "./day-06";
+
 import { readFile } from "fs/promises";
 
-async function main(): Promise<void> {
+async function main(day: string): Promise<void> {
+  const folder = "day-" + day.padStart(2, "0")
+
+  const { part1, part2 } = await import("./" + folder);
+  const input = (await readFile("./src/"+ folder + "/input.txt")).toString();
+
   console.log("PART 1:\n");
-  await runTimed(() => runSolution(part1).then(printResult));
+  await runTimed(() => printResult(part1(input)));
 
   console.log("\n\n------------\n\n");
 
   console.log("PART 2:\n");
-  await runTimed(() => runSolution(part2).then(printResult));
+  await runTimed(() => printResult(part2(input)));
 }
 
-async function runSolution(fn: Function): Promise<any> {
-  const contents = await readFile("./input.txt");
-
-  return fn(contents.toString());
+async function runSolution(fn: Function, input: string): Promise<any> {
+  return fn(input);
 }
 
 async function runTimed(fn: Function): Promise<number> {
@@ -34,4 +37,4 @@ function printResult(result: any): void {
   console.log(`Result:\n\n ${result}\n`);
 }
 
-main();
+main(process.argv[2]);
