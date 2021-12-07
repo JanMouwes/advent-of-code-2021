@@ -70,3 +70,7 @@ export function filterInOut<T>(list: T[], fn: (i: T) => boolean): [T[], T[]] {
 
   return [yes, no];
 }
+
+export function lines(input: string): string[] {
+  return input.split("\n")
+}
