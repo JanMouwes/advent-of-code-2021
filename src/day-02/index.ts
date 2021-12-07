@@ -1,3 +1,17 @@
+export const examples = {
+  input: `
+forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2`,
+  outputs: {
+    part1: "150",
+    part2: "900"
+  }
+} as const;
+
 export function part1(fileContents: string) {
   const commands: [string, number][] = parseCommands(fileContents);
 
@@ -46,10 +60,10 @@ function calculateNewDepth(
   return [position, depth, aim + argument];
 }
 
-function parseCommands(commands: string): [string, number][] {
+function parseCommands(commands: string): [string, number][] {  
   return commands
     .split("\n")
-    .filter((i) => i.trim() != "")
+    .filter((i) => i.trim() !== "")
     .map((c) => {
       const [command, arg] = c.split(" ");
 

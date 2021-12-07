@@ -1,5 +1,5 @@
 export const examples = {
-  input: "",
+  input: ``,
   outputs: {
     part1: "",
     part2: ""

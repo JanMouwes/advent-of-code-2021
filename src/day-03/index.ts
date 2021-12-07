@@ -1,20 +1,37 @@
 import { range } from "../util";
 
-const INPUT_WIDTH = 12;
+export const examples = {
+  input: `00100
+  11110
+  10110
+  10111
+  10101
+  01111
+  00111
+  11100
+  10000
+  11001
+  00010
+  01010`,
+  outputs: {
+    part1: "198",
+    part2: "230"
+  }
+} as const;
 
 export function part1(fileContents: string) {
-  const numbers: number[] = parseInput(fileContents);
+  const [numbers, width]: [number[], number] = parseInput(fileContents);
 
-  const mask = Number.parseInt("".padEnd(INPUT_WIDTH, "1"), 2);
+  const mask = Number.parseInt("".padEnd(width, "1"), 2);
 
-  const gamma = calculateGamma(numbers);
+  const gamma = calculateGamma(numbers, width);
   const epsilon = gamma ^ mask;
 
   return gamma * epsilon;
 }
 
-function calculateGamma(input: number[]) {
-  const masks = new Array(INPUT_WIDTH).fill(2).map((n, i) => Math.pow(n, i));
+function calculateGamma(input: number[], width: number) {
+  const masks = new Array(width).fill(2).map((n, i) => Math.pow(n, i));
 
   return masks
     .map((mask) => {
@@ -28,28 +45,29 @@ function calculateGamma(input: number[]) {
 }
 
 export function part2(fileContents: string) {
-  const numbers: number[] = parseInput(fileContents);
+  const [numbers, width]: [number[], number] = parseInput(fileContents);
 
-  const oxygen = calculateRating(numbers, toOxygenBit);
-  const co2 = calculateRating(numbers, toCO2Bit);
+  const oxygen = calculateRating(numbers, width, toOxygenBit);
+  const co2 = calculateRating(numbers, width, toCO2Bit);
 
   return co2 * oxygen;
 }
 
 function calculateRating(
   allNumbers: number[],
-  toBit: (res: CompResult) => Bit
+  width: number,
+  toBit: (res: CompResult) => Bit,
 ): number {
   let result = "";
 
-  return range(INPUT_WIDTH).reduce((input: number[], i: number) => {
+  return range(width).reduce((input: number[], i: number) => {
     if (input.length === 1) {
       return input;
     }
 
-    result += toBit(compareOnes(input, i));
+    result += toBit(compareOnes(input, width, i));
 
-    return input.filter((n) => toBinaryString(n).startsWith(result));
+    return input.filter((n) => toBinaryString(n, width).startsWith(result));
   }, allNumbers)[0];
 }
 
@@ -75,10 +93,10 @@ function toBitBase(result: CompResult, eq: Bit, gt: Bit, lt: Bit): Bit {
   }
 }
 
-function compareOnes(input: number[], position: number): CompResult {
+function compareOnes(input: number[], width: number, position: number): CompResult {
   const oneCount = input
     .map((n) => {
-      return toBinaryString(n)[position];
+      return toBinaryString(n, width)[position];
     })
     .filter((n) => n === "1").length;
 
@@ -91,13 +109,12 @@ function compareOnes(input: number[], position: number): CompResult {
   return oneCount > threshold ? "greater" : "less";
 }
 
-function toBinaryString(n: number, padding: number = INPUT_WIDTH) {
+function toBinaryString(n: number, padding: number) {
   return n.toString(2).padStart(padding, "0");
 }
 
-function parseInput(commands: string): number[] {
-  return commands
-    .split("\n")
-    .filter((i) => i.trim() != "")
-    .map((n) => Number.parseInt(n, 2));
+function parseInput(commands: string): [number[], number] {
+const split = commands.split("\n").filter((i) => i.trim() != "");
+
+  return [split.map((n) => Number.parseInt(n, 2)), split[0].length];
 }

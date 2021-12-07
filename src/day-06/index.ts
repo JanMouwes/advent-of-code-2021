@@ -1,4 +1,13 @@
-import { range, id, count, sum } from "../util/index";
+import { range, id, count, sum } from "../util";
+
+export const examples = {
+  input: "3,4,3,1,2",
+  outputs: {
+    part1: "5934",
+    part2: "26984457539"
+  }
+} as const;
+
 export function part1(fileContents: string) {
   const parsed: any = parseInput(fileContents);
 
