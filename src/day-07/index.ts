@@ -19,18 +19,20 @@ export function part2(fileContents: string) {
 }
 
 
-function calculateLinearFuelCostForCrab(crab: number, target: number) {
+function calculateLinearFuelCostForCrab(crab: number, target: number): number {
   return Math.abs(target - crab)
 }
 
-function calculateRisingFuelCostForCrab(crab: number, target: number) {
+function calculateRisingFuelCostForCrab(crab: number, target: number): number {
   const dist = Math.abs(target - crab);
 
   if (dist === 0) {
     return 0;
   }
   
-  return sum(range(dist)) + dist;
+  // y = (x^2) - ((x^2 - x) / 2)
+  const squared = Math.pow(dist, 2)
+  return squared - ((squared - dist) / 2);
 }
 
 function calculateTotalFuelCosts(crabPositions:number[], calculateFuelForCrab: (n: number, m: number) => number) {
