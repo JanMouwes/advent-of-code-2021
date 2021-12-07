@@ -24,6 +24,7 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
+    "colorts": "^0.1.63",
     "ts-node-dev": "^1.1.8"
   }
 }

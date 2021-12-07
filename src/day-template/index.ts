@@ -1,3 +1,11 @@
+export const examples = {
+  input: "",
+  outputs: {
+    part1: "",
+    part2: ""
+  }
+} as const;
+
 export function part1(fileContents: string) {
   const parsed: any = parseInput(fileContents);
 
