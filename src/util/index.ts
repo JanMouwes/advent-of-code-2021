@@ -30,15 +30,16 @@ export function strIntersect(as: string, bs: string): string[] {
 }
 
 export function intersect<T>(as: readonly T[], bs: readonly T[]): T[] {
-  return as.filter(a => bs.includes(a));
+  return as.filter((a) => bs.includes(a));
 }
 
-export function strDifference(as: string, bs: string): string[] {  
+export function strDifference(as: string, bs: string): string[] {
   return difference(as.split(""), bs.split(""));
 }
 export function difference<T>(as: readonly T[], bs: readonly T[]): T[] {
-  return as.filter(a => !bs.includes(a))
-           .concat(bs.filter(b => !as.includes(b)));
+  return as
+    .filter((a) => !bs.includes(a))
+    .concat(bs.filter((b) => !as.includes(b)));
 }
 
 export function partition<T, K>(list: T[], fn: (item: T) => K): Map<K, T[]> {
@@ -100,5 +101,5 @@ export function words(input: string): string[] {
 }
 
 export function concatLists<T>(lists: T[][]): T[] {
-  return lists.reduce((agg, curr) => agg.concat(curr), [])
+  return lists.reduce((agg, curr) => agg.concat(curr), []);
 }

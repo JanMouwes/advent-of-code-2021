@@ -13,8 +13,8 @@ export const examples = {
 `,
   outputs: {
     part1: "7",
-    part2: "5"
-  }
+    part2: "5",
+  },
 } as const;
 
 export function part1(fileContents: string) {
@@ -44,5 +44,8 @@ export function part2(fileContents: string) {
 }
 
 function parseInput(input: string) {
-  return input.split("\n").filter(l => l.trim() !== "").map((n) => Number(n));
+  return input
+    .split("\n")
+    .filter((l) => l.trim() !== "")
+    .map((n) => Number(n));
 }

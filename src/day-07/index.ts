@@ -4,8 +4,8 @@ export const examples = {
   input: "16,1,2,0,4,2,7,1,2,14",
   outputs: {
     part1: "37",
-    part2: "168"
-  }
+    part2: "168",
+  },
 } as const;
 
 export function part1(fileContents: string) {

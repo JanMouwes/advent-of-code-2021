@@ -3,11 +3,12 @@ import { range, uncurry } from "../util";
 type CoordsMap = Map<SerialisedCoords, number>;
 
 export const examples = {
-  input: "0,9 -> 5,9\n8,0 -> 0,8\n9,4 -> 3,4\n2,2 -> 2,1\n7,0 -> 7,4\n6,4 -> 2,0\n0,9 -> 2,9\n3,4 -> 1,4\n0,0 -> 8,8\n5,5 -> 8,2",
+  input:
+    "0,9 -> 5,9\n8,0 -> 0,8\n9,4 -> 3,4\n2,2 -> 2,1\n7,0 -> 7,4\n6,4 -> 2,0\n0,9 -> 2,9\n3,4 -> 1,4\n0,0 -> 8,8\n5,5 -> 8,2",
   outputs: {
     part1: "5",
-    part2: "12"
-  }
+    part2: "12",
+  },
 } as const;
 
 export function part1(fileContents: string) {

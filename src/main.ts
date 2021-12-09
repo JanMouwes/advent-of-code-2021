@@ -1,12 +1,19 @@
 import { readFile } from "fs/promises";
-import 'colorts/lib/string';
+import "colorts/lib/string";
 
-const emptyExamples = { input: undefined, outputs: { part1: undefined, part2: undefined } };
+const emptyExamples = {
+  input: undefined,
+  outputs: { part1: undefined, part2: undefined },
+};
 
 async function main(day: string): Promise<void> {
   const folder = "day-" + day.padStart(2, "0");
 
-  const { part1, part2, examples = emptyExamples } = await import("./" + folder);
+  const {
+    part1,
+    part2,
+    examples = emptyExamples,
+  } = await import("./" + folder);
   const input = (await readFile("./src/" + folder + "/input.txt")).toString();
 
   try {
@@ -45,13 +52,24 @@ async function testFunction(fn: Function, input: string, output: string) {
   const actual = (await fn(input)).toString();
 
   if (actual !== output.toString()) {
-    function cutOffString(string:string, maxSize:number) {
-      const [head, rest] = [string.slice(0, maxSize - 3), string.slice(maxSize - 3)];
+    function cutOffString(string: string, maxSize: number) {
+      const [head, rest] = [
+        string.slice(0, maxSize - 3),
+        string.slice(maxSize - 3),
+      ];
       const ellipsis = rest.length > 3 ? "..." : rest;
       return `${head}${ellipsis}`.trim();
     }
 
-    throw new Error(`Expected result of ${fn.name}("${cutOffString(input, 12)}") to be equal to ${cutOffString(output, 12)}, was ${cutOffString(actual, 12)}`.red);
+    throw new Error(
+      `Expected result of ${fn.name}("${cutOffString(
+        input,
+        12
+      )}") to be equal to ${cutOffString(output, 12)}, was ${cutOffString(
+        actual,
+        12
+      )}`.red
+    );
   }
 
   console.log("test successful".green);

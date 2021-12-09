@@ -1,4 +1,17 @@
-import { lines, words, second, concatLists, uncurry, intersect, filterInOut, partition, strIntersect, strDifference, difference, sum } from '../util';
+import {
+  lines,
+  words,
+  second,
+  concatLists,
+  uncurry,
+  intersect,
+  filterInOut,
+  partition,
+  strIntersect,
+  strDifference,
+  difference,
+  sum,
+} from "../util";
 
 export const examples = {
   input: `
@@ -14,8 +27,8 @@ egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce`,
   outputs: {
     part1: "26",
-    part2: "61229"
-  }
+    part2: "61229",
+  },
 } as const;
 
 type DisplayData = [string[], string[]];
@@ -26,9 +39,8 @@ export function part1(fileContents: string) {
   const seconds = concatLists(parsed.map(second));
 
   return seconds
-    .map(str => str.length)
-    .filter(n => [2, 4, 3, 7].includes(n))
-    .length;
+    .map((str) => str.length)
+    .filter((n) => [2, 4, 3, 7].includes(n)).length;
 }
 
 export function part2(fileContents: string) {
@@ -36,10 +48,18 @@ export function part2(fileContents: string) {
 
   const result = parsed.map(uncurry(determineNumbers));
 
-  return sum(result.map(ns => Number(ns.join(""))));
+  return sum(result.map((ns) => Number(ns.join(""))));
 }
 
-const allSegments = ["top", "middle", "bottom", "topleft", "topright", "bottomleft", "bottomright"];
+const allSegments = [
+  "top",
+  "middle",
+  "bottom",
+  "topleft",
+  "topright",
+  "bottomleft",
+  "bottomright",
+];
 type Segment = typeof allSegments[number];
 const allLetters = ["a", "b", "c", "d", "e", "f", "g"] as const;
 type Letter = typeof allLetters[number];
@@ -47,12 +67,20 @@ type Letter = typeof allLetters[number];
 export function determineNumbers(input: string[], output: string[]): string[] {
   const numbers = input.concat(output);
   const numberSet = new Set(numbers);
-  const byLength = partition([...numberSet.values()], n => n.length);
+  const byLength = partition([...numberSet.values()], (n) => n.length);
   const knownSegments = new Map<Segment, Letter>();
 
-
   const knownSequences: Record<string, string | null> = {
-    zero: null, one: null, two: null, three: null, four: null, five: null, six: null, seven: null, eight: null, nine: null
+    zero: null,
+    one: null,
+    two: null,
+    three: null,
+    four: null,
+    five: null,
+    six: null,
+    seven: null,
+    eight: null,
+    nine: null,
   };
 
   if (byLength.has(4)) {
@@ -67,7 +95,7 @@ export function determineNumbers(input: string[], output: string[]): string[] {
   if (byLength.has(2) && byLength.has(3)) {
     const [one] = byLength.get(2)!;
     const [seven] = byLength.get(3)!;
-    const [top] = seven.split("").filter(c => !one.includes(c))
+    const [top] = seven.split("").filter((c) => !one.includes(c));
 
     knownSequences.one = one;
     knownSequences.seven = seven;
@@ -79,7 +107,10 @@ export function determineNumbers(input: string[], output: string[]): string[] {
     const [seven] = byLength.get(3)!;
 
     const fives = byLength.get(5) || [];
-    const [[three]] = filterInOut(fives, cs => intersect(cs.split(""), seven.split("")).length === 3)
+    const [[three]] = filterInOut(
+      fives,
+      (cs) => intersect(cs.split(""), seven.split("")).length === 3
+    );
 
     if (three != null) {
       knownSequences.three = three;
@@ -89,12 +120,15 @@ export function determineNumbers(input: string[], output: string[]): string[] {
   if (knownSequences.three != null && byLength.has(6)) {
     const { three } = knownSequences;
     const sixes = byLength.get(6) || [];
-    const [[nine], rest] = filterInOut(sixes, str => strIntersect(str, three).length === three.length);
+    const [[nine], rest] = filterInOut(
+      sixes,
+      (str) => strIntersect(str, three).length === three.length
+    );
 
     if (nine != null) {
       knownSequences.nine = nine;
 
-      const [topleft] = strDifference(nine, three)
+      const [topleft] = strDifference(nine, three);
       knownSegments.set("topleft", topleft as Letter);
 
       const [bottomleft] = strDifference(nine, allLetters.join(""));
@@ -103,7 +137,10 @@ export function determineNumbers(input: string[], output: string[]): string[] {
 
     if (knownSequences.one != null) {
       const { one } = knownSequences;
-      const [[six], [zero]] = filterInOut(rest, str => strIntersect(str, one).length === 1)
+      const [[six], [zero]] = filterInOut(
+        rest,
+        (str) => strIntersect(str, one).length === 1
+      );
 
       if (six != null) {
         knownSequences.six = six;
@@ -128,15 +165,21 @@ export function determineNumbers(input: string[], output: string[]): string[] {
   }
 
   if ([...knownSegments.values()].length === 6) {
-    const [lastLetter] = difference<string>(allLetters, [...knownSegments.values()]);
-    const [lastSegment] = difference(allSegments, [...knownSegments.keys()])
+    const [lastLetter] = difference<string>(allLetters, [
+      ...knownSegments.values(),
+    ]);
+    const [lastSegment] = difference(allSegments, [...knownSegments.keys()]);
 
     knownSegments.set(lastSegment, lastLetter as Letter);
   }
 
-  const knownLetters = new Map([...knownSegments.entries()].map(([k, v]) => [v, k]));
+  const knownLetters = new Map(
+    [...knownSegments.entries()].map(([k, v]) => [v, k])
+  );
 
-  return output.map(n => toNumber(mapToPattern(n.split("") as Letter[], knownLetters)).toString());
+  return output.map((n) =>
+    toNumber(mapToPattern(n.split("") as Letter[], knownLetters)).toString()
+  );
 }
 
 /**
@@ -147,10 +190,18 @@ export function determineNumbers(input: string[], output: string[]): string[] {
  * e    f
  * e    f
  *  gggg
- * 
+ *
  * [a, b, c, d, e, f, g]
  */
-type DisplayPattern = [boolean, boolean, boolean, boolean, boolean, boolean, boolean];
+type DisplayPattern = [
+  boolean,
+  boolean,
+  boolean,
+  boolean,
+  boolean,
+  boolean,
+  boolean
+];
 function toNumber(pattern: DisplayPattern) {
   const patterns: Record<number, DisplayPattern> = {
     0: [true, true, true, false, true, true, true],
@@ -165,7 +216,9 @@ function toNumber(pattern: DisplayPattern) {
     9: [true, true, true, true, false, true, true],
   };
 
-  const tuple = Object.entries(patterns).find(([, val]) => pattern.join() === val.join());
+  const tuple = Object.entries(patterns).find(
+    ([, val]) => pattern.join() === val.join()
+  );
 
   if (tuple != null) {
     // number
@@ -175,14 +228,31 @@ function toNumber(pattern: DisplayPattern) {
   throw new Error("Invalid pattern " + pattern.join());
 }
 
-function mapToPattern(string: Letter[], letterMap: Map<Letter, Segment>): DisplayPattern {
-  const translated = new Set<Segment>(string.map(c => letterMap.get(c)!));
+function mapToPattern(
+  string: Letter[],
+  letterMap: Map<Letter, Segment>
+): DisplayPattern {
+  const translated = new Set<Segment>(string.map((c) => letterMap.get(c)!));
 
-  const segments: readonly [Segment, Segment, Segment, Segment, Segment, Segment, Segment] = [
-    "top", "topleft", "topright", "middle", "bottomleft", "bottomright", "bottom"
+  const segments: readonly [
+    Segment,
+    Segment,
+    Segment,
+    Segment,
+    Segment,
+    Segment,
+    Segment
+  ] = [
+    "top",
+    "topleft",
+    "topright",
+    "middle",
+    "bottomleft",
+    "bottomright",
+    "bottom",
   ] as const;
 
-  return segments.map(s => translated.has(s)) as DisplayPattern;
+  return segments.map((s) => translated.has(s)) as DisplayPattern;
 }
 
 function parseInput(input: string): DisplayData[] {
@@ -192,8 +262,5 @@ function parseInput(input: string): DisplayData[] {
 function parseLine(line: string): DisplayData {
   const [input, output] = line.split(" | ");
 
-  return [
-    words(input),
-    words(output)
-  ]
+  return [words(input), words(output)];
 }

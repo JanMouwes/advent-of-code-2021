@@ -22,8 +22,8 @@ export const examples = {
 2  0 12  3  7`,
   outputs: {
     part1: "4512",
-    part2: "1924"
-  }
+    part2: "1924",
+  },
 } as const;
 
 export function part1(fileContents: string) {

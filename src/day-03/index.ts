@@ -15,8 +15,8 @@ export const examples = {
   01010`,
   outputs: {
     part1: "198",
-    part2: "230"
-  }
+    part2: "230",
+  },
 } as const;
 
 export function part1(fileContents: string) {
@@ -56,7 +56,7 @@ export function part2(fileContents: string) {
 function calculateRating(
   allNumbers: number[],
   width: number,
-  toBit: (res: CompResult) => Bit,
+  toBit: (res: CompResult) => Bit
 ): number {
   let result = "";
 
@@ -93,7 +93,11 @@ function toBitBase(result: CompResult, eq: Bit, gt: Bit, lt: Bit): Bit {
   }
 }
 
-function compareOnes(input: number[], width: number, position: number): CompResult {
+function compareOnes(
+  input: number[],
+  width: number,
+  position: number
+): CompResult {
   const oneCount = input
     .map((n) => {
       return toBinaryString(n, width)[position];
@@ -114,7 +118,7 @@ function toBinaryString(n: number, padding: number) {
 }
 
 function parseInput(commands: string): [number[], number] {
-const split = commands.split("\n").filter((i) => i.trim() != "");
+  const split = commands.split("\n").filter((i) => i.trim() != "");
 
   return [split.map((n) => Number.parseInt(n, 2)), split[0].length];
 }
