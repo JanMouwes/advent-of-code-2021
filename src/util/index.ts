@@ -25,6 +25,22 @@ export function sum(list: number[]) {
   return list.reduce((x, y) => x + y);
 }
 
+export function strIntersect(as: string, bs: string): string[] {
+  return intersect(as.split(""), bs.split(""));
+}
+
+export function intersect<T>(as: readonly T[], bs: readonly T[]): T[] {
+  return as.filter(a => bs.includes(a));
+}
+
+export function strDifference(as: string, bs: string): string[] {  
+  return difference(as.split(""), bs.split(""));
+}
+export function difference<T>(as: readonly T[], bs: readonly T[]): T[] {
+  return as.filter(a => !bs.includes(a))
+           .concat(bs.filter(b => !as.includes(b)));
+}
+
 export function partition<T, K>(list: T[], fn: (item: T) => K): Map<K, T[]> {
   const map = new Map<K, T[]>();
 
@@ -71,6 +87,18 @@ export function filterInOut<T>(list: T[], fn: (i: T) => boolean): [T[], T[]] {
   return [yes, no];
 }
 
+export function isWhitespace(str: string): boolean {
+  return str.trim() === "";
+}
+
 export function lines(input: string): string[] {
-  return input.split("\n");
+  return input.split("\n").filter(not(isWhitespace));
+}
+
+export function words(input: string): string[] {
+  return input.split(" ").filter(not(isWhitespace));
+}
+
+export function concatLists<T>(lists: T[][]): T[] {
+  return lists.reduce((agg, curr) => agg.concat(curr), [])
 }
