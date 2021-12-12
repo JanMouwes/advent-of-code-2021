@@ -21,8 +21,12 @@ export function second<T>([, snd]: [any, T]): T {
   return snd;
 }
 
-export function sum(list: number[]) {
-  return list.reduce((x, y) => x + y);
+export function sum(list: number[]): number {
+  return list.reduce((x, y) => x + y, 0);
+}
+
+export function product(list: number[]): number {
+  return list.reduce((x, y) => x * y, 1);
 }
 
 export function strIntersect(as: string, bs: string): string[] {
