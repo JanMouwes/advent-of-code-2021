@@ -17,7 +17,7 @@ export function id<T>(input: T): T {
   return input;
 }
 
-export function second<T>([, snd]: [any, T]): T {
+export function second<T>([, snd]: readonly [any, T]): T {
   return snd;
 }
 
@@ -104,6 +104,14 @@ export function words(input: string): string[] {
   return input.split(" ").filter(not(isWhitespace));
 }
 
-export function concatLists<T>(lists: T[][]): T[] {
+export function concatLists<T>(lists: readonly T[][]): T[] {
   return lists.reduce((agg, curr) => agg.concat(curr), []);
+}
+
+export function last<T>(list: readonly T[]) {
+  return list[list.length - 1]
+}
+
+export function middle<T>(list: readonly T[]) {
+  return list[(list.length - 1) / 2]
 }
