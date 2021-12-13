@@ -1,4 +1,12 @@
-import { lines, concatLists, count, id, sum, second, middle } from '../util/index';
+import {
+  lines,
+  concatLists,
+  count,
+  id,
+  sum,
+  second,
+  middle,
+} from "../util/index";
 export const examples = {
   input: `[({(<(())[]>[[{[]{<()<>>
 [(()[<>])]({[<{<<[]>>(
@@ -25,16 +33,15 @@ type Closer = typeof closers[number];
 
 type Token = Opener | Closer;
 
-
 const pairs = [
   ["[", "]"],
   ["{", "}"],
   ["(", ")"],
-  ["<", ">"]
+  ["<", ">"],
 ] as const;
 
 function matchOpener(opener: Opener) {
-  return second(pairs.find(([o,]) => o === opener)!);
+  return second(pairs.find(([o]) => o === opener)!);
 }
 
 export function part1(fileContents: string) {
@@ -47,35 +54,37 @@ export function part1(fileContents: string) {
 
   const parsed = parseInput(fileContents);
 
-  const errors = concatLists(parsed.map(line => {
-    const stack: Opener[] = [];
+  const errors = concatLists(
+    parsed.map((line) => {
+      const stack: Opener[] = [];
 
-    for (const c of line) {
-      if (openers.includes(c as Opener)) {
-        stack.push(c as Opener);
-        continue;
+      for (const c of line) {
+        if (openers.includes(c as Opener)) {
+          stack.push(c as Opener);
+          continue;
+        }
+
+        const [expected] = pairs.find(([, end]) => c === end)!;
+
+        const last = stack.pop();
+
+        if (last === expected) {
+          continue;
+        }
+
+        return [c];
       }
 
-      const [expected,] = pairs.find(([, end]) => c === end)!;
-
-      const last = stack.pop();
-
-      if (last === expected) {
-        continue;
-      }
-
-      return [c];
-    }
-
-    return [];
-  }));
+      return [];
+    })
+  );
 
   const entries = [...count(errors, id).entries()];
 
-  return sum(entries.map(([token, amount]) => amount * closerPoints[token as Closer]));
+  return sum(
+    entries.map(([token, amount]) => amount * closerPoints[token as Closer])
+  );
 }
-
-
 
 export function part2(fileContents: string) {
   const closerPoints = {
@@ -87,31 +96,35 @@ export function part2(fileContents: string) {
 
   const parsed = parseInput(fileContents);
 
-  const incompleteLines = parsed.map(line => {
-    const stack: Opener[] = [];
+  const incompleteLines = parsed
+    .map((line) => {
+      const stack: Opener[] = [];
 
-    for (const c of line) {
-      if (openers.includes(c as Opener)) {
-        stack.push(c as Opener);
-        continue;
+      for (const c of line) {
+        if (openers.includes(c as Opener)) {
+          stack.push(c as Opener);
+          continue;
+        }
+
+        const [expected] = pairs.find(([, end]) => c === end)!;
+
+        const last = stack.pop();
+
+        if (last === expected) {
+          continue;
+        }
+
+        return [];
       }
 
-      const [expected,] = pairs.find(([, end]) => c === end)!;
+      return stack;
+    })
+    .filter((l) => l.length > 0)
+    .map((stack) => [...stack].reverse().map(matchOpener));
 
-      const last = stack.pop();
-
-      if (last === expected) {
-        continue;
-      }
-
-      return [];
-    }
-
-    return stack;
-  }).filter(l => l.length > 0)
-    .map(stack => [...stack].reverse().map(matchOpener));
-
-  const scores = incompleteLines.map(line => line.reduce((score, char) => score * 5 + closerPoints[char], 0));
+  const scores = incompleteLines.map((line) =>
+    line.reduce((score, char) => score * 5 + closerPoints[char], 0)
+  );
 
   scores.sort((a, b) => a - b);
 
@@ -119,5 +132,5 @@ export function part2(fileContents: string) {
 }
 
 function parseInput(input: string): Token[][] {
-  return lines(input).map(l => l.split("")) as Token[][];
+  return lines(input).map((l) => l.split("")) as Token[][];
 }

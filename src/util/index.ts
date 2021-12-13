@@ -109,9 +109,9 @@ export function concatLists<T>(lists: readonly T[][]): T[] {
 }
 
 export function last<T>(list: readonly T[]) {
-  return list[list.length - 1]
+  return list[list.length - 1];
 }
 
 export function middle<T>(list: readonly T[]) {
-  return list[(list.length - 1) / 2]
+  return list[(list.length - 1) / 2];
 }
