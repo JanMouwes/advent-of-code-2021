@@ -35,7 +35,9 @@ export function part1(fileContents: string) {
   const allCaves = uniques(
     connections.map(first).concat(connections.map(second))
   );
-  const smallCaves = new Set(first(filterInOut(allCaves, (cave) => cave.toLowerCase() === cave)));
+  const smallCaves = new Set(
+    first(filterInOut(allCaves, (cave) => cave.toLowerCase() === cave))
+  );
 
   const graph = new Map(
     [...partition(connections, first).entries()].map(([start, paths]) => [
@@ -54,7 +56,7 @@ export function part1(fileContents: string) {
     const edges = graph.get(head) || [];
 
     return edges
-      .filter(edge => !smallCaves.has(edge) || !path.includes(edge))
+      .filter((edge) => !smallCaves.has(edge) || !path.includes(edge))
       .map((edge) => findPaths([edge].concat(path)))
       .flat();
   }
@@ -71,7 +73,9 @@ export function part2(fileContents: string) {
   const allCaves = uniques(
     connections.map(first).concat(connections.map(second))
   );
-  const smallCaves = new Set(first(filterInOut(allCaves, (cave) => cave.toLowerCase() === cave)));
+  const smallCaves = new Set(
+    first(filterInOut(allCaves, (cave) => cave.toLowerCase() === cave))
+  );
 
   const graph = new Map(
     [...partition(connections, first).entries()].map(([start, paths]) => [
@@ -90,13 +94,16 @@ export function part2(fileContents: string) {
     const edges = graph.get(head) || [];
 
     return edges
-      .filter(edge => {
+      .filter((edge) => {
         if (["start", "end"].includes(edge) && path.includes(edge)) {
           return false;
         }
 
         function countSmallCaves(): number {
-          const cnts = count(path.filter((x) => smallCaves.has(x)), id).values();
+          const cnts = count(
+            path.filter((x) => smallCaves.has(x)),
+            id
+          ).values();
           return Math.max(...cnts);
         }
 
@@ -104,7 +111,7 @@ export function part2(fileContents: string) {
           smallCaves.has(edge) &&
           path.includes(edge) &&
           countSmallCaves() > 1
-        )
+        );
       })
       .map((edge) => findPaths([edge].concat(path)))
       .flat();
