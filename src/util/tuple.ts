@@ -1,9 +1,9 @@
-export type Tuple<A, B> = [A, B];
-export type Triple<A, B, C> = [A, B, C];
+export type Tuple<A, B> = readonly [A, B];
+export type Triple<A, B, C> = readonly [A, B, C];
 
-export function first<T>([fst]: readonly [T, any]): T {
+export function first<T>([fst]: Tuple<T, any>): T {
   return fst;
 }
-export function second<T>([, snd]: readonly [any, T]): T {
+export function second<T>([, snd]: Tuple<any, T>): T {
   return snd;
 }
