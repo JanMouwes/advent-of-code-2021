@@ -1,4 +1,4 @@
-import { intersect, disjunction } from './set';
+import { intersect, disjunction } from "./set";
 
 export * as Grid from "./grid";
 export * as List from "./list";
@@ -24,7 +24,7 @@ export function id<T>(input: T): T {
   return input;
 }
 
-export function first<T>([fst,]: readonly [T, any]): T {
+export function first<T>([fst]: readonly [T, any]): T {
   return fst;
 }
 export function second<T>([, snd]: readonly [any, T]): T {
@@ -45,9 +45,9 @@ export function strIntersect(as: string, bs: string): string[] {
 
 /**
  * should be strDisjuncition
- * @param as 
- * @param bs 
- * @returns 
+ * @param as
+ * @param bs
+ * @returns
  */
 export function strDifference(as: string, bs: string): string[] {
   return disjunction(as.split(""), bs.split(""));
