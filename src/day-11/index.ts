@@ -1,12 +1,11 @@
 import {
   Grid as G,
-  lines,
-  second,
   range,
   Set as S,
   List as L,
 } from "../util/index";
-import { uniques } from "../util/list";
+import { second } from "../util/tuple";
+import { lines } from '../util/string';
 
 export const examples = {
   input: `5483143223

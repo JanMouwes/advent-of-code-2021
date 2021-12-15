@@ -1,12 +1,9 @@
-import {
-  lines,
-  concatLists,
-  count,
-  id,
-  sum,
-  second,
-  middle,
-} from "../util/index";
+import { second } from "../util/tuple";
+import { lines } from '../util/string';
+import { sum } from '../util/maths';
+import { middle, count, concat } from '../util/list';
+import { id } from '../util/fn';
+
 export const examples = {
   input: `[({(<(())[]>[[{[]{<()<>>
 [(()[<>])]({[<{<<[]>>(
@@ -54,7 +51,7 @@ export function part1(fileContents: string) {
 
   const parsed = parseInput(fileContents);
 
-  const errors = concatLists(
+  const errors = concat(
     parsed.map((line) => {
       const stack: Opener[] = [];
 

@@ -1,4 +1,6 @@
-import { second, first, id } from "./index";
+import { range } from './index';
+import { first, second } from './tuple';
+import { id } from './fn';
 
 export type Grid<T> = readonly T[][];
 export type Coord = readonly [number, number];
@@ -76,4 +78,10 @@ export function copy<T>(grid: Grid<T>): Grid<T> {
 
 export function values<T>(grid: Grid<T>): T[] {
   return grid.flat();
+}
+
+export function transpose<T>(matrix: Grid<T>): Grid<T> {
+  const rowLength = matrix[0].length;
+
+  return range(rowLength).map((i) => matrix.map((row) => row[i]));
 }

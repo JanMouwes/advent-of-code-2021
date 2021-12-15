@@ -1,4 +1,7 @@
-import { range, id, count, sum } from "../util";
+import { id } from '../util/fn';
+import { sum } from '../util/maths';
+import { count } from '../util/list';
+import { range } from '../util/range';
 
 export const examples = {
   input: "3,4,3,1,2",

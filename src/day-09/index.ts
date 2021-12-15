@@ -1,4 +1,9 @@
-import { lines, concatLists, second, sum, product } from "../util/index";
+import { sum, product } from "../util/maths";
+import { lines } from '../util/string';
+import { concat } from '../util/list';
+import { second } from '../util/tuple';
+
+
 export const examples = {
   input: `2199943210
 3987894921
@@ -44,7 +49,7 @@ function findLows(grid: Grid): Coord[] {
 }
 
 function flatWithCoords(grid: Grid): [number, Coord][] {
-  return concatLists(grid.map((row, y) => row.map((col, x) => [col, [x, y]])));
+  return concat(grid.map((row, y) => row.map((col, x) => [col, [x, y]])));
 }
 
 function findBasin(start: Coord, grid: Grid): Coord[] {

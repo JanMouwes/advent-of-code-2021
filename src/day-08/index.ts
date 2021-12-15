@@ -1,17 +1,9 @@
-import {
-  lines,
-  words,
-  second,
-  concatLists,
-  uncurry,
-  intersect,
-  filterInOut,
-  partition,
-  strIntersect,
-  strDifference,
-  disjunction,
-  sum,
-} from "../util";
+import { Set as S } from "../util";
+import { sum } from '../util/maths';
+import { lines, words, intersect, disjunction } from '../util/string';
+import { uncurry } from '../util/fn';
+import { partition, filterInOut } from '../util/list';
+import { second } from '../util/tuple';
 
 export const examples = {
   input: `
@@ -36,7 +28,7 @@ type DisplayData = [string[], string[]];
 export function part1(fileContents: string) {
   const parsed: DisplayData[] = parseInput(fileContents);
 
-  const seconds = concatLists(parsed.map(second));
+  const seconds = parsed.map(second).flat();
 
   return seconds
     .map((str) => str.length)
@@ -109,7 +101,7 @@ export function determineNumbers(input: string[], output: string[]): string[] {
     const fives = byLength.get(5) || [];
     const [[three]] = filterInOut(
       fives,
-      (cs) => intersect(cs.split(""), seven.split("")).length === 3
+      (cs) => S.intersect(cs.split(""), seven.split("")).length === 3
     );
 
     if (three != null) {
@@ -122,16 +114,16 @@ export function determineNumbers(input: string[], output: string[]): string[] {
     const sixes = byLength.get(6) || [];
     const [[nine], rest] = filterInOut(
       sixes,
-      (str) => strIntersect(str, three).length === three.length
+      (str) => intersect(str, three).length === three.length
     );
 
     if (nine != null) {
       knownSequences.nine = nine;
 
-      const [topleft] = strDifference(nine, three);
+      const [topleft] = disjunction(nine, three);
       knownSegments.set("topleft", topleft as Letter);
 
-      const [bottomleft] = strDifference(nine, allLetters.join(""));
+      const [bottomleft] = disjunction(nine, allLetters.join(""));
       knownSegments.set("bottomleft", bottomleft as Letter);
     }
 
@@ -139,18 +131,18 @@ export function determineNumbers(input: string[], output: string[]): string[] {
       const { one } = knownSequences;
       const [[six], [zero]] = filterInOut(
         rest,
-        (str) => strIntersect(str, one).length === 1
+        (str) => intersect(str, one).length === 1
       );
 
       if (six != null) {
         knownSequences.six = six;
 
-        const [topright] = strDifference(six, allLetters.join(""));
+        const [topright] = disjunction(six, allLetters.join(""));
         knownSegments.set("topright", topright as Letter);
 
         if (knownSequences.one != null) {
           const { one } = knownSequences;
-          const [bottomright] = strDifference(one, topright);
+          const [bottomright] = disjunction(one, topright);
 
           knownSegments.set("bottomright", bottomright as Letter);
         }
@@ -158,17 +150,17 @@ export function determineNumbers(input: string[], output: string[]): string[] {
       if (zero != null) {
         knownSequences.zero = zero;
 
-        const [middle] = strDifference(zero, allLetters.join(""));
+        const [middle] = disjunction(zero, allLetters.join(""));
         knownSegments.set("middle", middle as Letter);
       }
     }
   }
 
   if ([...knownSegments.values()].length === 6) {
-    const [lastLetter] = disjunction<string>(allLetters, [
+    const [lastLetter] = S.disjunction<string>(allLetters, [
       ...knownSegments.values(),
     ]);
-    const [lastSegment] = disjunction(allSegments, [...knownSegments.keys()]);
+    const [lastSegment] = S.disjunction(allSegments, [...knownSegments.keys()]);
 
     knownSegments.set(lastSegment, lastLetter as Letter);
   }

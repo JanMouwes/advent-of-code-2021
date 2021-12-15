@@ -1,5 +1,6 @@
 import { readFile } from "fs/promises";
 import "colorts/lib/string";
+import { range } from './util/index';
 
 const emptyExamples = {
   input: undefined,
@@ -7,6 +8,21 @@ const emptyExamples = {
 };
 
 async function main(day: string): Promise<void> {
+  let [start, end = null] = day.split(":");
+
+  if (end != null) {
+    start = start || "1"
+
+    for (const n of range(Number(start), Number(end) + 1)) {
+      console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+      await runDay(n.toString());      
+    }
+  } else {
+    runDay(start)
+  }
+}
+
+async function runDay(day: string): Promise<void> {
   const folder = "day-" + day.padStart(2, "0");
 
   const {
@@ -15,6 +31,8 @@ async function main(day: string): Promise<void> {
     examples = emptyExamples,
   } = await import("./" + folder);
   const input = (await readFile("./src/" + folder + "/input.txt")).toString();
+
+  console.log("Day " + day + "\n");
 
   try {
     console.log("PART 1:\n".gray);

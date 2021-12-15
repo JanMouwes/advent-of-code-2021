@@ -1,4 +1,5 @@
-import { range, uncurry } from "../util";
+import { range } from "../util";
+import { uncurry } from '../util/fn';
 
 type CoordsMap = Map<SerialisedCoords, number>;
 
