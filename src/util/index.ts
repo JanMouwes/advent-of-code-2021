@@ -1,3 +1,10 @@
+import { intersect, disjunction } from './set';
+
+export * as Grid from "./grid";
+export * as List from "./list";
+export * as Set from "./set";
+export * from "./set"; // backwards comp
+
 export function range(start: number, end?: number): number[] {
   if (end == null) {
     end = start;
@@ -17,6 +24,9 @@ export function id<T>(input: T): T {
   return input;
 }
 
+export function first<T>([fst,]: readonly [T, any]): T {
+  return fst;
+}
 export function second<T>([, snd]: readonly [any, T]): T {
   return snd;
 }
@@ -33,19 +43,15 @@ export function strIntersect(as: string, bs: string): string[] {
   return intersect(as.split(""), bs.split(""));
 }
 
-export function intersect<T>(as: readonly T[], bs: readonly T[]): T[] {
-  return as.filter((a) => bs.includes(a));
-}
-
+/**
+ * should be strDisjuncition
+ * @param as 
+ * @param bs 
+ * @returns 
+ */
 export function strDifference(as: string, bs: string): string[] {
-  return difference(as.split(""), bs.split(""));
+  return disjunction(as.split(""), bs.split(""));
 }
-export function difference<T>(as: readonly T[], bs: readonly T[]): T[] {
-  return as
-    .filter((a) => !bs.includes(a))
-    .concat(bs.filter((b) => !as.includes(b)));
-}
-
 export function partition<T, K>(list: T[], fn: (item: T) => K): Map<K, T[]> {
   const map = new Map<K, T[]>();
 

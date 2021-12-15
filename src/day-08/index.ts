@@ -9,7 +9,7 @@ import {
   partition,
   strIntersect,
   strDifference,
-  difference,
+  disjunction,
   sum,
 } from "../util";
 
@@ -165,10 +165,10 @@ export function determineNumbers(input: string[], output: string[]): string[] {
   }
 
   if ([...knownSegments.values()].length === 6) {
-    const [lastLetter] = difference<string>(allLetters, [
+    const [lastLetter] = disjunction<string>(allLetters, [
       ...knownSegments.values(),
     ]);
-    const [lastSegment] = difference(allSegments, [...knownSegments.keys()]);
+    const [lastSegment] = disjunction(allSegments, [...knownSegments.keys()]);
 
     knownSegments.set(lastSegment, lastLetter as Letter);
   }
