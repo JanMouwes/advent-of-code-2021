@@ -1,9 +1,9 @@
 import { Set as S } from "../util";
-import { sum } from '../util/maths';
-import { lines, words, intersect, disjunction } from '../util/string';
-import { uncurry } from '../util/fn';
-import { partition, filterInOut } from '../util/list';
-import { second } from '../util/tuple';
+import { sum } from "../util/maths";
+import { lines, words, intersect, disjunction } from "../util/string";
+import { uncurry } from "../util/fn";
+import { partition, filterInOut } from "../util/list";
+import { second } from "../util/tuple";
 
 export const examples = {
   input: `

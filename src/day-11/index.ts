@@ -1,11 +1,6 @@
-import {
-  Grid as G,
-  range,
-  Set as S,
-  List as L,
-} from "../util/index";
+import { Grid as G, range, Set as S, List as L } from "../util/index";
 import { second } from "../util/tuple";
-import { lines } from '../util/string';
+import { lines } from "../util/string";
 
 export const examples = {
   input: `5483143223

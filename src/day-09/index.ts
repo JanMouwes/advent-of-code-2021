@@ -1,8 +1,7 @@
 import { sum, product } from "../util/maths";
-import { lines } from '../util/string';
-import { concat } from '../util/list';
-import { second } from '../util/tuple';
-
+import { lines } from "../util/string";
+import { concat } from "../util/list";
+import { second } from "../util/tuple";
 
 export const examples = {
   input: `2199943210

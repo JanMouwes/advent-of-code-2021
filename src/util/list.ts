@@ -1,4 +1,4 @@
-import { not } from './fn';
+import { not } from "./fn";
 
 export function uniques<T>(list: readonly T[]): T[] {
   return [...new Set<string>(list.map((v) => JSON.stringify(v)))].map((v) =>
@@ -21,7 +21,6 @@ export function partition<T, K>(list: T[], fn: (item: T) => K): Map<K, T[]> {
 
   return map;
 }
-
 
 export function count<T, K>(array: T[], fn: (item: T) => K): Map<K, number> {
   return array.reduce((map, item) => {
@@ -66,4 +65,3 @@ export function middle<T>(list: readonly T[]): T {
 export function concat<T>(lists: readonly T[][]): T[] {
   return lists.reduce((agg, curr) => agg.concat(curr), []);
 }
-

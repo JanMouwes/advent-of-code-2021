@@ -1,5 +1,5 @@
 import { range } from "../util";
-import { sum } from '../util/maths';
+import { sum } from "../util/maths";
 
 export const examples = {
   input: "16,1,2,0,4,2,7,1,2,14",

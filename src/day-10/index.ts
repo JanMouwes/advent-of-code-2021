@@ -1,8 +1,8 @@
 import { second } from "../util/tuple";
-import { lines } from '../util/string';
-import { sum } from '../util/maths';
-import { middle, count, concat } from '../util/list';
-import { id } from '../util/fn';
+import { lines } from "../util/string";
+import { sum } from "../util/maths";
+import { middle, count, concat } from "../util/list";
+import { id } from "../util/fn";
 
 export const examples = {
   input: `[({(<(())[]>[[{[]{<()<>>

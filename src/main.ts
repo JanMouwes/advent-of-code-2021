@@ -1,6 +1,6 @@
 import { readFile } from "fs/promises";
 import "colorts/lib/string";
-import { range } from './util/index';
+import { range } from "./util/index";
 
 const emptyExamples = {
   input: undefined,
@@ -11,14 +11,14 @@ async function main(day: string): Promise<void> {
   let [start, end = null] = day.split(":");
 
   if (end != null) {
-    start = start || "1"
+    start = start || "1";
 
     for (const n of range(Number(start), Number(end) + 1)) {
       console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-      await runDay(n.toString());      
+      await runDay(n.toString());
     }
   } else {
-    runDay(start)
+    runDay(start);
   }
 }
 

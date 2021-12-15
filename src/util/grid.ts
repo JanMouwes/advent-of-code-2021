@@ -1,6 +1,6 @@
-import { range } from './index';
-import { first, second } from './tuple';
-import { id } from './fn';
+import { range } from "./index";
+import { first, second } from "./tuple";
+import { id } from "./fn";
 
 export type Grid<T> = readonly T[][];
 export type Coord = readonly [number, number];
