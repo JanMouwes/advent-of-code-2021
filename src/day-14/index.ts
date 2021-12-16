@@ -1,14 +1,12 @@
-import { Tuple, equals, second } from '../util/tuple';
-import { lines } from '../util/string';
-import { range } from '../util/range';
-import { count } from '../util/list';
-import { id } from '../util/fn';
-import { max, min } from '../util/maths';
-
+import { Tuple, equals, second } from "../util/tuple";
+import { lines } from "../util/string";
+import { range } from "../util/range";
+import { count } from "../util/list";
+import { id } from "../util/fn";
+import { max, min } from "../util/maths";
 
 type Template = string;
 type Rule = [Tuple<string, string>, string];
-
 
 export const examples = {
   input: `NNCB
@@ -38,32 +36,38 @@ CN -> C`,
 export function part1(fileContents: string) {
   const [template, rules]: any = parseInput(fileContents);
 
-  const result = range(10).reduce(t => applyRules(t, rules), template);
+  const result = range(10).reduce((t) => applyRules(t, rules), template);
 
   const counts = count(result.split(""), id);
 
-  const [,maxCount] = max([...counts.entries()], second)
-  const [,minCount] = min([...counts.entries()], second)
+  const [, maxCount] = max([...counts.entries()], second);
+  const [, minCount] = min([...counts.entries()], second);
 
   return maxCount - minCount;
 }
 
 function applyRules(template: string, rules: Rule[]): string {
   const ps = pairs(template);
-  const [head] = ps[0]
+  const [head] = ps[0];
 
-  return head + ps.map(pair => {
-    const rule = rules.find(([input]) => equals(input, pair));
+  return (
+    head +
+    ps
+      .map((pair) => {
+        const rule = rules.find(([input]) => equals(input, pair));
 
-    if (rule == undefined) {
-      return pair;
-    }
+        if (rule == undefined) {
+          return pair;
+        }
 
-    const [, c] = pair;
-    const [, b] = rule;
+        const [, c] = pair;
+        const [, b] = rule;
 
-    return [b, c];
-  }).flat().join("");
+        return [b, c];
+      })
+      .flat()
+      .join("")
+  );
 }
 
 function pairs(string: string): [string, string][] {
@@ -72,20 +76,20 @@ function pairs(string: string): [string, string][] {
 
   return tail.reduce((agg, letter, index) => {
     const prev = letters[index];
-    agg.push([prev, letter])
+    agg.push([prev, letter]);
     return agg;
-  }, [] as [string, string][])
+  }, [] as [string, string][]);
 }
 
 export function part2(fileContents: string) {
   const [template, rules]: any = parseInput(fileContents);
 
-  const result = range(40).reduce(t => applyRules(t, rules), template);
+  const result = range(40).reduce((t) => applyRules(t, rules), template);
 
   const counts = count(result.split(""), id);
 
-  const [,maxCount] = max([...counts.entries()], second)
-  const [,minCount] = min([...counts.entries()], second)
+  const [, maxCount] = max([...counts.entries()], second);
+  const [, minCount] = min([...counts.entries()], second);
 
   return maxCount - minCount;
 }
@@ -96,7 +100,7 @@ function parseInput(input: string): [Template, Rule[]] {
   return [
     template,
     lines(rules)
-      .map(line => line.split(" -> "))
-      .map(([start, end]) => [start.split("") as [string, string], end])
-  ]
+      .map((line) => line.split(" -> "))
+      .map(([start, end]) => [start.split("") as [string, string], end]),
+  ];
 }

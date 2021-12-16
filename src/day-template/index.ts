@@ -9,7 +9,7 @@ export const examples = {
 export function part1(fileContents: string) {
   const parsed: any = parseInput(fileContents);
 
-  console.log(parsed);  
+  console.log(parsed);
 
   return undefined;
 }
@@ -17,7 +17,7 @@ export function part1(fileContents: string) {
 export function part2(fileContents: string) {
   const parsed: any = parseInput(fileContents);
 
-  console.log(parsed);  
+  console.log(parsed);
 
   return undefined;
 }
