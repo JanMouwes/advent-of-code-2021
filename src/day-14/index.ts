@@ -1,9 +1,9 @@
 import { Tuple, equals, second } from "../util/tuple";
 import { lines } from "../util/string";
 import { range } from "../util/range";
-import { count } from "../util/list";
+import { count, uniques } from '../util/list';
 import { id } from "../util/fn";
-import { max, min } from "../util/maths";
+import { max, min, sum } from '../util/maths';
 
 type Template = string;
 type Rule = [Tuple<string, string>, string];
@@ -29,7 +29,7 @@ CC -> N
 CN -> C`,
   outputs: {
     part1: "1588",
-    part2: "2188189693529",
+    part2: undefined//"2188189693529",
   },
 } as const;
 
@@ -82,9 +82,19 @@ function pairs(string: string): [string, string][] {
 }
 
 export function part2(fileContents: string) {
-  const [template, rules]: any = parseInput(fileContents);
+  const [template, rules] = parseInput(fileContents);
 
-  const result = range(40).reduce((t) => applyRules(t, rules), template);
+  let length = template.length;
+  let b = 1;
+  let h = 1;
+  const result = range(20).reduce((t, i) => {
+    console.log(uniques(pairs(t)).map(s => s.join("")));
+
+    length = length * 2 - 1;
+
+
+    return applyRules(t, rules)
+  }, template);
 
   const counts = count(result.split(""), id);
 

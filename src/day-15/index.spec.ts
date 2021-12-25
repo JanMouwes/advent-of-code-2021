@@ -21,7 +21,7 @@ async function testPart(fn: Function, input?: string, output?: string) {
 }
 
 async function testFunction(fn: Function, input: string, output: string) {
-  const actual = (await fn(input))?.toString();
+  const actual = (await fn(input)).toString();
 
-  expect(actual || '').toBe(output);
+  expect(actual).toBe(output);
 }

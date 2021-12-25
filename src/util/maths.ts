@@ -1,12 +1,21 @@
-export function sum(list: number[]): number {
-  return list.reduce((x, y) => x + y, 0);
+import { reduce } from './iterator';
+
+export function plus(a: number, b: number) {
+  return a + b;
+}
+export function mult(a: number, b: number) {
+  return a * b;
 }
 
-export function product(list: number[]): number {
-  return list.reduce((x, y) => x * y, 1);
+export function sum(iter: Iterable<number>): number {
+  return reduce(iter, plus, 0);
 }
 
-export function max<T>([head, ...rest]: T[], fn: (item: T) => number): T {
+export function product(iter: Iterable<number>): number {
+  return reduce(iter, mult, 0);
+}
+
+export function max<T>([head, ...rest]: Iterable<T>, fn: (item: T) => number): T {
   return rest.reduce((prev: T, curr: T) => {
     if (fn(prev) > fn(curr)) {
       return prev;

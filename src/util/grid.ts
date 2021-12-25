@@ -5,8 +5,11 @@ import { id } from "./fn";
 export type Grid<T> = readonly T[][];
 export type Coord = readonly [number, number];
 
-export function toString(grid: Grid<any>): string {
-  return grid.map((row) => row.join(" ")).join("\n");
+export function toString(grid: Grid<any>, separator: string = " "): string {
+  return grid.map((row) => row.join(separator)).join("\n");
+}
+export function fromString(grid: string, separator: string = " "): Grid<string> {
+  return grid.split("\n").map((row) => row.split(separator));
 }
 
 export function valueOf<T>([x, y]: Coord, grid: Grid<T>): T {
@@ -31,7 +34,7 @@ export function neighbours<T>(
   return [-1, 0, 1]
     .map((n) => {
       return [-1, 0, 1]
-        .filter((m) => countDiagonals || m !== n)
+        .filter((m) => countDiagonals || (Math.abs(m) !== Math.abs(n)))
         .map((m) => [x + n, y + m] as Coord);
     })
     .flat()
@@ -46,13 +49,13 @@ export function neighbours<T>(
     });
 }
 
-export function forEach<T>(grid: Grid<T>, fn: (t: T, index?: Coord) => void) {
+export function forEach<T>(grid: Grid<T>, fn: (t: T, index: Coord) => void) {
   grid.forEach((row, y) => row.forEach((item, x) => fn(item, [x, y])));
 }
 
 export function map<T1, T2>(
   grid: Grid<T1>,
-  fn: (item: T1, index?: Coord) => T2
+  fn: (item: T1, index: Coord) => T2
 ): Grid<T2> {
   return grid.map((row, y) => row.map((item, x) => fn(item, [x, y] as Coord)));
 }
@@ -84,4 +87,12 @@ export function transpose<T>(matrix: Grid<T>): Grid<T> {
   const rowLength = matrix[0].length;
 
   return range(rowLength).map((i) => matrix.map((row) => row[i]));
+}
+
+export function rows<T>(grid: Grid<T>): T[][] {
+  return grid.map(id);
+}
+
+export function columns<T>(grid: Grid<T>): T[][] {
+  return transpose(grid).map(id);
 }
