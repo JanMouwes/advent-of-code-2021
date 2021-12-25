@@ -1,7 +1,6 @@
-import { CompareFn } from '../sort';
+import { CompareFn } from "../sort";
 
 export class Heap<T> {
-
   private tree: T[] = [];
   private _size: number = 0;
 
@@ -9,7 +8,7 @@ export class Heap<T> {
     return this._size;
   }
 
-  constructor(private readonly compare: CompareFn<T>) { }
+  constructor(private readonly compare: CompareFn<T>) {}
 
   pop(): T {
     const top = this.tree[1];
@@ -19,7 +18,10 @@ export class Heap<T> {
     this._size--;
 
     // percolate previous 'last' node down
-    while (node * 2 < this.size + 1 && this.childrenOf(node).some(c => this.isSmaller(c, node))) {
+    while (
+      node * 2 < this.size + 1 &&
+      this.childrenOf(node).some((c) => this.isSmaller(c, node))
+    ) {
       const child = this.smallestChildOf(node);
 
       this.swap(node, child);

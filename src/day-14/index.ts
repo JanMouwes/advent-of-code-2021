@@ -1,9 +1,9 @@
 import { Tuple, equals, second } from "../util/tuple";
 import { lines } from "../util/string";
 import { range } from "../util/range";
-import { count, uniques } from '../util/list';
+import { count, uniques } from "../util/list";
 import { id } from "../util/fn";
-import { max, min, sum } from '../util/maths';
+import { max, min, sum } from "../util/maths";
 
 type Template = string;
 type Rule = [Tuple<string, string>, string];
@@ -29,7 +29,7 @@ CC -> N
 CN -> C`,
   outputs: {
     part1: "1588",
-    part2: undefined//"2188189693529",
+    part2: undefined, //"2188189693529",
   },
 } as const;
 
@@ -88,12 +88,11 @@ export function part2(fileContents: string) {
   let b = 1;
   let h = 1;
   const result = range(20).reduce((t, i) => {
-    console.log(uniques(pairs(t)).map(s => s.join("")));
+    console.log(uniques(pairs(t)).map((s) => s.join("")));
 
     length = length * 2 - 1;
 
-
-    return applyRules(t, rules)
+    return applyRules(t, rules);
   }, template);
 
   const counts = count(result.split(""), id);

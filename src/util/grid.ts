@@ -8,7 +8,10 @@ export type Coord = readonly [number, number];
 export function toString(grid: Grid<any>, separator: string = " "): string {
   return grid.map((row) => row.join(separator)).join("\n");
 }
-export function fromString(grid: string, separator: string = " "): Grid<string> {
+export function fromString(
+  grid: string,
+  separator: string = " "
+): Grid<string> {
   return grid.split("\n").map((row) => row.split(separator));
 }
 
@@ -34,7 +37,7 @@ export function neighbours<T>(
   return [-1, 0, 1]
     .map((n) => {
       return [-1, 0, 1]
-        .filter((m) => countDiagonals || (Math.abs(m) !== Math.abs(n)))
+        .filter((m) => countDiagonals || Math.abs(m) !== Math.abs(n))
         .map((m) => [x + n, y + m] as Coord);
     })
     .flat()

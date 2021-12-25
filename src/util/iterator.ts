@@ -1,5 +1,5 @@
-import { Predicate, Fn, constant } from './fn';
-import { sum } from './maths';
+import { Predicate, Fn, constant } from "./fn";
+import { sum } from "./maths";
 
 export function find<T>(iter: Iterable<T>, predicate: Predicate<T>) {
   for (const value of iter) {

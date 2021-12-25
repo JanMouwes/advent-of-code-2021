@@ -1,17 +1,29 @@
-import { Heap } from './heap';
+import { Heap } from "./heap";
 
 describe(Heap.name, () => {
   describe("e2e", () => {
     let heap: Heap<number>;
     beforeEach(() => {
       heap = new Heap<number>((a, b) => a - b);
-    })
+    });
 
     const inputs: [number[], number[]][] = [
-      [[1, 2, 3, 4], [1, 2, 3, 4]],
-      [[4, 2, 3, 1], [1, 2, 3, 4]],
-      [[4, 1, 2, 3], [1, 2, 3, 4]],
-      [[4, 3, 2, 1], [1, 2, 3, 4]],
+      [
+        [1, 2, 3, 4],
+        [1, 2, 3, 4],
+      ],
+      [
+        [4, 2, 3, 1],
+        [1, 2, 3, 4],
+      ],
+      [
+        [4, 1, 2, 3],
+        [1, 2, 3, 4],
+      ],
+      [
+        [4, 3, 2, 1],
+        [1, 2, 3, 4],
+      ],
     ];
 
     inputs.forEach(([input, expected]) => {
