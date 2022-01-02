@@ -22,6 +22,37 @@ export function* map<T, R>(iter: Iterable<T>, fn: Fn<T, R>): Iterable<R> {
   }
 }
 
+export function* filter<T>(list: Iterable<T>, condition: Predicate<T>) {
+  for (let item of list) {
+    if (condition(item)) {
+      yield item;
+    }
+  }
+}
+
 export function count<T>(iter: Iterable<T>): number {
   return sum(map(iter, constant(1)));
 }
+
+
+export function* takeWhile<T>(list: Iterable<T>, condition: Predicate<T>) {
+  for (let item of list) {
+    if (!condition(item)) {
+      return;
+    }
+    
+    yield item;
+  }
+}
+
+export function* dropWhile<T>(list: Iterable<T>, condition: Predicate<T>): Generator<T, void, unknown> {
+  const [head, ...tail] = list;
+  if (condition(head)) {
+    list = [...dropWhile(tail, condition)];
+  }
+
+  for (const item of list) {
+    yield item;
+  }
+}
+

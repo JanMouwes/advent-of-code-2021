@@ -88,8 +88,6 @@ export function part2(fileContents: string) {
   let b = 1;
   let h = 1;
   const result = range(20).reduce((t, i) => {
-    console.log(uniques(pairs(t)).map((s) => s.join("")));
-
     length = length * 2 - 1;
 
     return applyRules(t, rules);

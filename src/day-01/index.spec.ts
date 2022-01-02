@@ -6,8 +6,8 @@ describe("part 1", () => {
   });
 });
 
-describe("part 1", () => {
-  it("part 2 should give expected output", async () => {
+describe("part 2", () => {
+  it("should give expected output", async () => {
     await testPart(part2, examples.input, examples.outputs.part2);
   });
 });

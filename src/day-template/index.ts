@@ -1,8 +1,8 @@
 export const examples = {
   input: ``,
   outputs: {
-    part1: "",
-    part2: "",
+    part1: undefined,
+    part2: undefined,
   },
 } as const;
 

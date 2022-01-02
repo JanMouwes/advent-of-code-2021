@@ -1,4 +1,4 @@
-import { reduce } from "./iterator";
+import { reduce } from "./iterable";
 
 export function plus(a: number, b: number) {
   return a + b;
@@ -12,7 +12,7 @@ export function sum(iter: Iterable<number>): number {
 }
 
 export function product(iter: Iterable<number>): number {
-  return reduce(iter, mult, 0);
+  return reduce(iter, mult, 1);
 }
 
 export function max<T>(

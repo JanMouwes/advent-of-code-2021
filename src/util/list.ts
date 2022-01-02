@@ -1,4 +1,4 @@
-import { not } from "./fn";
+import { not, Predicate } from './fn';
 
 export function uniques<T>(list: readonly T[]): T[] {
   return [...new Set<string>(list.map((v) => JSON.stringify(v)))].map((v) =>
@@ -40,6 +40,14 @@ export function filterInOut<T>(list: T[], fn: (i: T) => boolean): [T[], T[]] {
   const no = list.filter(not(fn));
 
   return [yes, no];
+}
+
+export function take<T>(list: T[], n: number) {
+  return list.slice(0, n);
+}
+
+export function drop<T>(list: T[], n: number) {
+  return list.slice(n);
 }
 
 export function head<T>(list: readonly T[], n: number): T[] {
