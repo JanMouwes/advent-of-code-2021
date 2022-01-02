@@ -34,18 +34,20 @@ export function count<T>(iter: Iterable<T>): number {
   return sum(map(iter, constant(1)));
 }
 
-
 export function* takeWhile<T>(list: Iterable<T>, condition: Predicate<T>) {
   for (let item of list) {
     if (!condition(item)) {
       return;
     }
-    
+
     yield item;
   }
 }
 
-export function* dropWhile<T>(list: Iterable<T>, condition: Predicate<T>): Generator<T, void, unknown> {
+export function* dropWhile<T>(
+  list: Iterable<T>,
+  condition: Predicate<T>
+): Generator<T, void, unknown> {
   const [head, ...tail] = list;
   if (condition(head)) {
     list = [...dropWhile(tail, condition)];
@@ -55,4 +57,3 @@ export function* dropWhile<T>(list: Iterable<T>, condition: Predicate<T>): Gener
     yield item;
   }
 }
-

@@ -23,10 +23,13 @@ export function disjunction(as: string, bs: string): string[] {
 
 /**
  * Chops string into even parts.
- * @param str 
- * @param bitSize 
+ * @param str
+ * @param bitSize
  */
-export function* chop(str: string, bitSize: number): Generator<string, void, unknown> {
+export function* chop(
+  str: string,
+  bitSize: number
+): Generator<string, void, unknown> {
   while (str.length > 0) {
     yield str.substring(0, bitSize);
     str = str.substring(bitSize);
