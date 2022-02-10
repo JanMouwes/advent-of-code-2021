@@ -1,9 +1,11 @@
 import { Tuple } from "./tuple";
 
-type Case<In extends readonly any[], Out> = Tuple<In, Out> | { args: In, expected: Out }
+type Case<In extends readonly any[], Out> =
+  | Tuple<In, Out>
+  | { args: In; expected: Out };
 
 export function testFnIO<In extends readonly any[], Out>(
-  cases: { args: In, expected: Out }[],
+  cases: { args: In; expected: Out }[],
   fn: (...input: In) => Out,
   description?: string
 ): void;
@@ -19,19 +21,21 @@ export function testFnIO<In extends readonly any[], Out>(
   fn: (...input: In) => Out,
   description?: string
 ) {
-  cases.map((c: Case<In, Out>) => {
-    if ("args" in c) {
-      return [c.args, c.expected] as [In, Out]
-    }
+  cases
+    .map((c: Case<In, Out>) => {
+      if ("args" in c) {
+        return [c.args, c.expected] as [In, Out];
+      }
 
-    return c;
-  }).forEach(([args, expected]) => {
-    const descr = description || `(${args.join(", ")}) -> ${expected}`
+      return c;
+    })
+    .forEach(([args, expected]) => {
+      const descr = description || `(${args.join(", ")}) -> ${expected}`;
 
-    it(descr, () => {
-      const actual = fn(...args);
+      it(descr, () => {
+        const actual = fn(...args);
 
-      expect(actual).toEqual(expected);
+        expect(actual).toEqual(expected);
+      });
     });
-  });
 }
