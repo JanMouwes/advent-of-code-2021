@@ -7,6 +7,7 @@
     "start": "ts-node-dev --respawn --clear -- src/main.ts",
     "test": "jasmine-ts --config=jasmine.json",
     "test:watch": "nodemon --ext ts --exec 'jasmine-ts --config=jasmine.json'",
+    "lint": "prettier --parser typescript --check src",
     "format": "prettier --parser typescript --write src"
   },
   "repository": {
