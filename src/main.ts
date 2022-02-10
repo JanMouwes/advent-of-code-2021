@@ -67,7 +67,7 @@ async function testPart(fn: Function, input?: string, output?: string) {
 }
 
 async function testFunction(fn: Function, input: string, output: string) {
-  const actual = (await fn(input)).toString();
+  const actual = (await fn(input))?.toString() || "undefined";
 
   if (actual !== output.toString()) {
     function cutOffString(string: string, maxSize: number) {
