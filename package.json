@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node-dev --respawn --clear -- src/main.ts",
     "test": "jasmine-ts --config=jasmine.json",
+    "test:watch": "nodemon --ext ts --exec 'jasmine-ts --config=jasmine.json'",
     "format": "prettier --parser typescript --write src"
   },
   "repository": {
@@ -25,6 +26,7 @@
     "jasmine-spec-reporter": "^7.0.0",
     "jasmine-ts": "^0.4.0",
     "jasmine-ts-console-reporter": "^3.1.1",
+    "nodemon": "^2.0.15",
     "prettier": "^2.5.0",
     "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
