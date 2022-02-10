@@ -11,7 +11,7 @@ export const examples = {
 9899965678`,
   outputs: {
     part1: "15",
-    part2: "0",
+    part2: "1134",
   },
 } as const;
 
